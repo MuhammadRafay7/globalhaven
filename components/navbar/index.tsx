@@ -19,7 +19,9 @@ const Navbar: React.FC = async () => {
           <UserMenu user={user} />
         </div>
       </nav>
-      <Categories />
+      <Suspense fallback={<div className="h-[60px]" />}>
+        <Categories />
+      </Suspense>
     </header>
   );
 };

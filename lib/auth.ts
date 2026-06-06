@@ -6,51 +6,51 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import { db } from "./db";
 
+// Only include OAuth providers when their credentials are configured —
+// NextAuth throws at runtime if clientId/clientSecret are empty strings.
+const providers: AuthOptions["providers"] = [
+  CredentialsProvider({
+    name: "credentials",
+    credentials: {
+      email: { label: "email", type: "text" },
+      password: { label: "password", type: "password" },
+    },
+    async authorize(credentials) {
+      if (!credentials?.email || !credentials?.password) {
+        throw new Error("Invalid credentials");
+      }
+      const user = await db.user.findUnique({
+        where: { email: credentials.email },
+      });
+      if (!user || !user.password) throw new Error("Invalid credentials");
+      const isCorrect = await bcrypt.compare(credentials.password, user.password);
+      if (!isCorrect) throw new Error("Invalid credentials");
+      return user;
+    },
+  }),
+];
+
+if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+  providers.push(
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    })
+  );
+}
+
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  providers.push(
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+  );
+}
+
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db),
-  providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {
-        email: { label: "email", type: "text" },
-        password: {
-          label: "password",
-          type: "password",
-        },
-      },
-
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Invalid credentials");
-        }
-
-        const user = await db.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
-
-        if (!user || !user?.password) throw new Error("Invalid credentials");
-
-        const isCorrectPassword = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-
-        if (!isCorrectPassword) throw new Error("Invalid credentials");
-
-        return user;
-      },
-    }),
-  ],
+  providers,
   callbacks: {
     async session({ token, session }) {
       if (token) {
@@ -58,22 +58,14 @@ export const authOptions: AuthOptions = {
         session.user.name = token.name;
         session.user.email = token.email;
       }
-
       return session;
     },
-
     async jwt({ token, user }) {
-      if (user) {
-        return { ...token, ...user };
-      }
+      if (user) return { ...token, ...user };
       return token;
     },
   },
-  pages: {
-    signIn: "/",
-  },
-  session: {
-    strategy: "jwt",
-  },
-  secret: process.env.NEXTAUTH_SECRET,
+  pages: { signIn: "/" },
+  session: { strategy: "jwt" },
+  secret: process.env.NEXTAUTH_SECRET ?? "globalhaven-fallback-secret-change-in-production",
 };
