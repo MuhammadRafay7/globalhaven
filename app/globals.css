@@ -59,40 +59,189 @@ body {
   z-index: 0 !important;
 }
 
-.rdrMonth {
+/* ─── Booking Calendar ────────────────────────────────────────────── */
+.booking-calendar .rdrCalendarWrapper {
   width: 100% !important;
+  font-size: 13px !important;
+  background: transparent !important;
+  padding: 0 16px 8px !important;
 }
 
-.rdrCalendarWrapper {
+.booking-calendar .rdrMonth {
   width: 100% !important;
-  font-size: 16px !important;
+  padding: 0 !important;
 }
 
-.dark .rdrCalendarWrapper {
-  background-color: #1e293b !important;
+/* Month & year header */
+.booking-calendar .rdrMonthAndYearWrapper {
+  padding: 8px 0 4px !important;
+  height: 44px !important;
+  align-items: center !important;
+}
+
+.booking-calendar .rdrMonthAndYearPickers {
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  color: #0f172a !important;
+  gap: 4px !important;
+}
+
+.booking-calendar .rdrMonthAndYearPickers select {
+  background: transparent !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  padding: 2px 18px 2px 4px !important;
+  border-radius: 6px !important;
+}
+
+/* Navigation buttons — clean circle arrows, no box */
+.booking-calendar .rdrPprevButton,
+.booking-calendar .rdrNextButton {
+  background: transparent !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 50% !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.15s ease !important;
+  margin: 0 4px !important;
+}
+
+.booking-calendar .rdrPprevButton:hover,
+.booking-calendar .rdrNextButton:hover {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Override the default border/arrow shapes inside the buttons */
+.booking-calendar .rdrPprevButton i {
+  border-color: transparent #64748b transparent transparent !important;
+  border-width: 5px 7px 5px 4px !important;
+  transform: translate(-1px, 0) !important;
+}
+
+.booking-calendar .rdrNextButton i {
+  border-color: transparent transparent transparent #64748b !important;
+  border-width: 5px 4px 5px 7px !important;
+  transform: translate(1px, 0) !important;
+}
+
+/* Week-day labels */
+.booking-calendar .rdrWeekDays {
+  padding: 4px 0 !important;
+}
+
+.booking-calendar .rdrWeekDay {
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Day cells */
+.booking-calendar .rdrDay {
+  height: 38px !important;
+  line-height: 38px !important;
+}
+
+.booking-calendar .rdrDayNumber {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+}
+
+.booking-calendar .rdrDayNumber span {
+  color: #1e293b !important;
+  font-weight: 500 !important;
+}
+
+.booking-calendar .rdrDayHovered .rdrDayNumber span,
+.booking-calendar .rdrDayActive .rdrDayNumber span {
+  color: white !important;
+}
+
+/* Selected range */
+.booking-calendar .rdrInRange {
+  background: #eef2ff !important;
+}
+
+.booking-calendar .rdrStartEdge,
+.booking-calendar .rdrEndEdge {
+  background: #6366f1 !important;
+  border-radius: 50% !important;
+}
+
+.booking-calendar .rdrDayStartPreview,
+.booking-calendar .rdrDayEndPreview,
+.booking-calendar .rdrDayInPreview {
+  border-color: #6366f1 !important;
+}
+
+.booking-calendar .rdrDayToday .rdrDayNumber span:after {
+  background: #6366f1 !important;
+}
+
+/* Disabled days */
+.booking-calendar .rdrDayDisabled {
+  background: transparent !important;
+  opacity: 0.4 !important;
+}
+
+.booking-calendar .rdrDayDisabled .rdrDayNumber span {
+  color: #94a3b8 !important;
+  text-decoration: line-through !important;
+}
+
+/* ── Dark mode calendar ── */
+.dark .booking-calendar .rdrMonthAndYearPickers {
   color: #f1f5f9 !important;
 }
 
-.dark .rdrDayNumber span {
+.dark .booking-calendar .rdrMonthAndYearPickers select {
   color: #f1f5f9 !important;
 }
 
-.dark .rdrDayDisabled {
-  background-color: #334155 !important;
+.dark .booking-calendar .rdrPprevButton,
+.dark .booking-calendar .rdrNextButton {
+  border-color: #334155 !important;
 }
 
-.dark .rdrDayDisabled .rdrDayNumber span {
+.dark .booking-calendar .rdrPprevButton:hover,
+.dark .booking-calendar .rdrNextButton:hover {
+  background: #334155 !important;
+}
+
+.dark .booking-calendar .rdrPprevButton i {
+  border-color: transparent #94a3b8 transparent transparent !important;
+}
+
+.dark .booking-calendar .rdrNextButton i {
+  border-color: transparent transparent transparent #94a3b8 !important;
+}
+
+.dark .booking-calendar .rdrDayNumber span {
+  color: #f1f5f9 !important;
+}
+
+.dark .booking-calendar .rdrInRange {
+  background: #312e81 !important;
+}
+
+.dark .booking-calendar .rdrStartEdge,
+.dark .booking-calendar .rdrEndEdge {
+  background: #6366f1 !important;
+}
+
+.dark .booking-calendar .rdrDayDisabled {
+  opacity: 0.3 !important;
+}
+
+.dark .booking-calendar .rdrDayDisabled .rdrDayNumber span {
   color: #64748b !important;
-}
-
-.dark .rdrMonthAndYearPickers select {
-  background-color: #1e293b !important;
-  color: #f1f5f9 !important;
-}
-
-.dark .rdrPprevButton,
-.dark .rdrNextButton {
-  background-color: #334155 !important;
 }
 
 ::-webkit-scrollbar {
