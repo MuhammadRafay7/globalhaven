@@ -16,7 +16,7 @@ const NotFound = () => {
           Page not found
         </h2>
         <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm">
-          Looks like this destination is off the map. Let's get you back on
+          Looks like this destination is off the map. Let&apos;s get you back on
           track.
         </p>
       </div>

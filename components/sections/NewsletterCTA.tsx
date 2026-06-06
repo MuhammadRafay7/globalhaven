@@ -75,7 +75,7 @@ const NewsletterCTA = () => {
             >
               <MdCheckCircle size={22} className="text-emerald-300" />
               <p className="text-white font-semibold text-sm">
-                You're in! Check your inbox for a welcome gift.
+                You&apos;re in! Check your inbox for a welcome gift.
               </p>
             </motion.div>
           )}

@@ -41,7 +41,7 @@ const TripsPage = async () => {
             No trips yet
           </h3>
           <p className="text-slate-500 dark:text-slate-400 max-w-sm text-sm leading-relaxed">
-            You haven't booked any stays yet. Browse thousands of unique homes
+            You haven&apos;t booked any stays yet. Browse thousands of unique homes
             across the world and plan your next adventure.
           </p>
         </div>

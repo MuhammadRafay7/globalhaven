@@ -69,7 +69,7 @@ const Testimonials = () => {
             Loved by Travellers Everywhere
           </h2>
           <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto text-base">
-            Don't take our word for it — here's what real guests say about their
+            Don&apos;t take our word for it — here&apos;s what real guests say about their
             GlobalHaven experiences.
           </p>
         </div>

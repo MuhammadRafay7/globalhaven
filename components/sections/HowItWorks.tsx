@@ -49,7 +49,7 @@ const HowItWorks = () => {
           How GlobalHaven Works
         </h2>
         <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto text-base">
-          From search to stay, we've made the whole process simple, secure, and
+          From search to stay, we&apos;ve made the whole process simple, secure, and
           stress-free — so you can focus on the adventure.
         </p>
       </div>

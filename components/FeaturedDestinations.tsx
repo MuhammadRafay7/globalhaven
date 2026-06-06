@@ -24,7 +24,7 @@ const FeaturedDestinations = () => {
             Top Destinations
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-base mt-2 max-w-lg">
-            Handpicked by our team — these are the world's most sought-after locations for unique stays.
+            Handpicked by our team — these are the world&apos;s most sought-after locations for unique stays.
           </p>
         </div>
         <Link
