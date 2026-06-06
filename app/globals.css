@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --bg: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --nav-bg: rgba(255, 255, 255, 0.95);
+}
+
+.dark {
+  --primary: #818cf8;
+  --primary-dark: #6366f1;
+  --bg: #0f172a;
+  --bg-secondary: #1e293b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --card: #1e293b;
+  --nav-bg: rgba(15, 23, 42, 0.95);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.no-scroll {
+  position: fixed;
+  inline-size: 100%;
+}
+
+.main-container {
+  @apply max-w-[1140px] 2xl:max-w-[1200px] mx-auto xl:px-0 px-4;
+}
+
+.swiper-wrapper {
+  @apply md:gap-2 gap-1 justify-between;
+}
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}
+
+.rdrMonth {
+  width: 100% !important;
+}
+
+.rdrCalendarWrapper {
+  width: 100% !important;
+  font-size: 16px !important;
+}
+
+.dark .rdrCalendarWrapper {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+.dark .rdrDayNumber span {
+  color: #f1f5f9 !important;
+}
+
+.dark .rdrDayDisabled {
+  background-color: #334155 !important;
+}
+
+.dark .rdrDayDisabled .rdrDayNumber span {
+  color: #64748b !important;
+}
+
+.dark .rdrMonthAndYearPickers select {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+.dark .rdrPprevButton,
+.dark .rdrNextButton {
+  background-color: #334155 !important;
+}
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-400 transition-all duration-300 rounded-[25px];
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-500;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-primary-100 rounded-[25px];
+}
+
+::-webkit-scrollbar-corner {
+  @apply rounded-[25px];
+}
+
+.dark ::-webkit-scrollbar-track {
+  background-color: #1e293b;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #4f46e5;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+}
+
+/* Card hover effects */
+.listing-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Destination card gradient */
+.destination-gradient {
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+}
+
+/* Star rating */
+.star-filled {
+  color: #f59e0b;
+}
+
+.star-empty {
+  color: #d1d5db;
+}
+
+/* Glassmorphism navbar */
+.glass-nav {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Theme transition */
+html {
+  transition: background-color 0.3s ease;
+}
+
+/* Custom focus styles */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Badge styles */
+.badge-new {
+  @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300;
+}
+
+.badge-popular {
+  @apply bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300;
+}
