@@ -1,16 +1,39 @@
-import { initEdgeStore } from "@edgestore/server";
-import { createEdgeStoreNextHandler } from "@edgestore/server/adapters/next/app";
+import { NextRequest } from "next/server";
 
-const es = initEdgeStore.create();
+// EdgeStore credentials are optional. When missing, return 503 so the
+// build doesn't crash and the app still runs without upload support.
+const credentialsMissing =
+  !process.env.EDGE_STORE_ACCESS_KEY || !process.env.EDGE_STORE_SECRET_KEY;
 
-const edgeStoreRouter = es.router({
-  publicFiles: es.fileBucket(),
-});
+function unavailable(_req: NextRequest): Response {
+  return Response.json(
+    { error: "EdgeStore is not configured on this server." },
+    { status: 503 }
+  );
+}
 
-const handler = createEdgeStoreNextHandler({
-  router: edgeStoreRouter,
-});
+// Lazy-load the real handler only when credentials exist.
+// Using a factory function prevents the EdgeStore SDK from running its
+// credential check at module-evaluation time during the Next.js build.
+async function getHandler() {
+  const { initEdgeStore } = await import("@edgestore/server");
+  const { createEdgeStoreNextHandler } = await import(
+    "@edgestore/server/adapters/next/app"
+  );
+  const es = initEdgeStore.create();
+  const edgeStoreRouter = es.router({ publicFiles: es.fileBucket() });
+  return createEdgeStoreNextHandler({ router: edgeStoreRouter });
+}
 
-export { handler as GET, handler as POST };
+let cachedHandler: Awaited<ReturnType<typeof getHandler>> | null = null;
 
-export type EdgeStoreRouter = typeof edgeStoreRouter;
+async function route(req: NextRequest): Promise<Response> {
+  if (credentialsMissing) return unavailable(req);
+  if (!cachedHandler) cachedHandler = await getHandler();
+  return cachedHandler(req);
+}
+
+export { route as GET, route as POST };
+
+// Type-only export consumed by lib/edgestore.ts
+export type EdgeStoreRouter = any;
